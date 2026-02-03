@@ -22,3 +22,6 @@ Route::get('/about', [PageController::class, 'about'])->name('about');
 
 // On donne le nom 'products.show' à la page produit
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+
+// On relie l'URL /products à la méthode index du ProductController
+Route::get('/products', [App\Http\Controllers\ProductController::class, 'index'])->name('products.index');

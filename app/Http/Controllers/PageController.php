@@ -6,17 +6,22 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
-    public function home()
-    {
-        // La fonction route() fabrique l'URL toute seule !
-        // Ici, on lui demande l'URL pour le produit n°42
-        $lien = route('products.show', ['id' => 42]);
-        
-        return "Bienvenue ! Regarde notre produit vedette ici : " . $lien;
-    }
+   public function home()
+{
+    // 1. On prépare les données (comme demandé dans l'exercice)
+    $data = [
+        'nomBoutique' => 'ShopLaravel',
+        'description' => 'La référence pour apprendre Laravel 12',
+        'ouvert' => true,
+    ];
 
-    public function about()
+    // 2. On envoie le tableau $data à la vue
+    // Le deuxième paramètre de view() sert à passer les variables
+    return view('home', ['donnees' => $data]);
+}
+
+            public function about()
     {
-        return "À propos de notre boutique ShopLaravel.";
+        return view('about');
     }
 }
