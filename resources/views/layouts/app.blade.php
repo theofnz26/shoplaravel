@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'ShopLaravel')</title>
-    {{-- J'ajoute un peu de style CSS basique pour faire propre --}}
+   
     <style>
         body { font-family: sans-serif; padding: 20px; }
         nav { background: #333; padding: 10px; margin-bottom: 20px; }

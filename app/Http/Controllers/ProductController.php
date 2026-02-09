@@ -7,24 +7,21 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     // Ici, la variable $id va recevoir automatiquement ce qu'il y a dans l'URL
-    public function show($id)
+   public function show($id)
     {
-        return "Détails du produit n°" . $id;
+        // On cherche le produit dans la BDD avec son ID
+        // findOrFail : Si l'ID n'existe pas, Laravel renvoie automatiquement une erreur 404.
+        $product = \App\Models\Product::findOrFail($id);
+
+        // On l'envoie à la vue
+        return view('products.show', compact('product'));
     }
-
-// Exercice 3 : Afficher une liste de produits
-    public function index()
+public function index()
     {
-        // 1. On crée une liste fictive de produits (Tableau de tableaux)
-        $products = [
-            ['id' => 1, 'name' => 'Vélo de course', 'price' => 499],
-            ['id' => 2, 'name' => 'Casque audio', 'price' => 89],
-            ['id' => 3, 'name' => 'Montre connectée', 'price' => 199],
-            ['id' => 4, 'name' => 'Sac à dos', 'price' => 45],
-        ];
+        // On récupère TOUS les produits de la base de données
+        $lesProduits = \App\Models\Product::all();
 
-        // 2. On envoie cette liste à la vue 'products.index'
-        // Le point dans 'products.index' signifie : dossier "products", fichier "index"
-        return view('products.index', ['lesProduits' => $products]);
+        // On envoie ces données à la vue
+        return view('products.index', compact('lesProduits'));
     }
 }  
