@@ -11,14 +11,13 @@ class Product extends Model
 
     // 1. PROTECTION : Seules ces colonnes peuvent être modifiées via create() ou update()
     protected $fillable = [
-        'name',
-        'slug',
-        'description',
+       'name',
         'price',
+        'description',
         'stock',
         'active',
-        'category_id',
         'image',
+        'category_id',
     ];
 
     // 2. CONVERSION : On force le type de certaines colonnes

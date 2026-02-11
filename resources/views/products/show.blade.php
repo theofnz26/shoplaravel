@@ -13,11 +13,10 @@
         padding: 30px;
         color: #e6e6e6;
         display: flex;
-        gap: 40px; /* Espace entre l'image et le texte */
+        gap: 40px; 
         align-items: flex-start;
     }
 
-    /* Colonne Image */
     .product-left {
         flex: 1;
         background: white;
@@ -34,34 +33,49 @@
         object-fit: contain;
     }
 
-    /* Colonne Infos */
     .product-right {
         flex: 1.5;
         display: flex;
         flex-direction: column;
     }
 
-    .product-category-badge {
+    /* Badge de disponibilité */
+    .status-badge {
         background: #238636;
         color: white;
         display: inline-block;
         padding: 5px 10px;
-        border-radius: 20px;
-        font-size: 0.8rem;
+        border-radius: 4px;
+        font-size: 0.7rem;
         font-weight: bold;
+        margin-bottom: 10px;
         align-self: flex-start;
-        margin-bottom: 15px;
+    }
+
+    /* OBJECTIF 2 & 3 : Style pour le lien de la catégorie */
+    .category-link {
+        color: #00d2ff;
+        text-decoration: none;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+    }
+    .category-link:hover {
+        text-decoration: underline;
+        color: #e8b046;
     }
 
     h1 {
         font-size: 2.5rem;
         margin: 0 0 15px 0;
         color: white;
+        font-family: 'Orbitron', sans-serif;
     }
 
     .price-large {
         font-size: 2rem;
-        color: #c5a059; /* Or */
+        color: #c5a059; 
         font-weight: bold;
         margin-bottom: 20px;
         border-bottom: 1px solid #30363d;
@@ -97,10 +111,6 @@
         flex-grow: 1;
     }
 
-    .btn-cart:hover {
-        background-color: #eacf85;
-    }
-
     .btn-back {
         padding: 15px 20px;
         border: 1px solid #30363d;
@@ -112,37 +122,35 @@
         transition: all 0.3s;
     }
 
-    .btn-back:hover {
-        border-color: #8b949e;
-        color: white;
-    }
-
-    /* Version mobile */
     @media (max-width: 768px) {
-        .product-container {
-            flex-direction: column;
-        }
+        .product-container { flex-direction: column; }
     }
 </style>
 
 <div class="product-container">
     
-    {{-- Partie GAUCHE : Image --}}
     <div class="product-left">
         @if($product->image)
-            <img src="{{ $product->image }}" alt="{{ $product->name }}">
+            {{-- Gestion dynamique de l'image (Upload ou URL) --}}
+            <img src="{{ Str::startsWith($product->image, 'http') ? $product->image : asset($product->image) }}" alt="{{ $product->name }}">
         @else
             <img src="https://via.placeholder.com/400x400?text=Produit+YGO" alt="Pas d'image">
         @endif
     </div>
 
-    {{-- Partie DROITE : Infos et Achat --}}
     <div class="product-right">
         
+        {{-- Affichage de la catégorie (Objectif 2) [cite: 20, 25, 136] --}}
+        @if($product->category)
+            <a href="{{ route('categories.show', $product->category->id) }}" class="category-link">
+                Archétype : {{ $product->category->name }}
+            </a>
+        @endif
+
         @if($product->active)
-            <span class="product-category-badge">EN STOCK</span>
+            <span class="status-badge">EN STOCK</span>
         @else
-            <span class="product-category-badge" style="background: #da3633;">RUPTURE DE STOCK</span>
+            <span class="status-badge" style="background: #da3633;">RUPTURE</span>
         @endif
 
         <h1>{{ $product->name }}</h1>
